@@ -1,0 +1,125 @@
+@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css';
+
+
+.barber-list tbody td > img {
+    position: relative;
+	max-width: 50px;
+	float: left;
+	margin-right: 15px;
+}
+.barber-list tbody td .barber-name {
+	display: block;
+	font-size: 1.25em;
+	padding-top: 3px;
+	margin-left: 60px;
+    font-weight: 600;
+}
+.barber-list tbody td .barber-subhead {
+	font-size: 0.875em;
+	font-style: italic;
+}
+
+/* TABLES */
+.table {
+    border-collapse: separate;
+}
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+	background-color: #eee;
+}
+.table thead > tr > th {
+	border-bottom: 1px solid #C2C2C2;
+	padding-bottom: 0;
+}
+.table tbody > tr > td {
+	font-size: 0.875em;
+	background: #f5f5f5;
+	border-top: 10px solid #fff;
+	vertical-align: middle;
+	padding: 12px 8px;
+}
+.table tbody > tr > td:first-child,
+.table thead > tr > th:first-child {
+	padding-left: 20px;
+}
+.table thead > tr > th span {
+	border-bottom: 2px solid #C2C2C2;
+	display: inline-block;
+	padding: 0 5px;
+	padding-bottom: 5px;
+	font-weight: normal;
+}
+.table thead > tr > th > a span {
+	color: #344644;
+}
+.table thead > tr > th > a span:after {
+	content: "\f0dc";
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: inherit;
+	margin-left: 5px;
+	font-size: 0.75em;
+}
+
+.table a.table-link:hover {
+	text-decoration: none;
+	color: #2aa493;
+}
+.table a.table-link.danger {
+	color: #fe635f;
+}
+.table a.table-link.danger:hover {
+	color: #dd504c;
+}
+
+#addbutton{
+    margin-top: 15pt;
+    margin-bottom: 15pt;
+}
+
+.form-control {
+    width: 98%;
+    margin-left: 3pt;
+    margin-top: 3t;
+}
+.col-form-label{
+    margin-left: 3pt;
+
+}
+
+.modal-content{
+    width: 350px;
+}
+
+.modal{
+    margin-left:3%;
+	margin-top: -2%;
+}
+
+.navbar{
+	background-color: #f5f5f5;
+}
+
+i {
+	cursor: pointer;
+}
+
+
+#view-modal-content{
+	margin-left: -50%;
+	width: 200%;
+}
+
+.view-content{
+	font-weight: bold; font-size: larger;
+}
+
+.searchParent {
+	text-align: center;
+  }
+  .searchChild {
+	display: inline-block;
+	
+  }
+  

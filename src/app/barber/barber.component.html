@@ -1,0 +1,191 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">  
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+    <nav class="navbar justify-content-between rounded">
+        <a class="navbar-title">
+          <span>
+            <button style="cursor: pointer; border:0" type="button" class="bi bi-box-arrow-left" aria-label="Close" (click)="logout()"> </button>
+          </span>
+          <img src="https://i.pinimg.com/564x/97/69/0f/97690f03a312bd3f836171ff4ed16213.jpg" alt="..." height="45">
+          <span>Barbers Directory</span> 
+        </a>
+          <div class="searchParent">
+            <form #searchForm="ngForm" (ngSubmit)="findBarbers(searchForm)">
+              <span class="searchChild"><input ngModel name="searchValue" id="searchValue" type="text" class="form-control mr-sm-2" placeholder="Search" aria-label="Search"></span>
+              <span class="searchChild" style="margin: 5px"><button style="cursor: pointer; border:0" type="submit" class="bi bi-search"></button></span>
+            </form>
+            </div>
+    </nav>
+
+    <button id="addbutton" type="button" class="btn btn-outline-dark" (click)="openAddModal()">+ Add New</button>
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayAdd}">
+         <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                        <div class="modal-header">
+                              <h4 class="modal-title">Add New Barber</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="onCloseAddModal()"><span aria-hidden="true">&times;</span></button>
+                          </div>
+                          <div class="modal-body">
+                              <form #addForm="ngForm" (ngSubmit)="addBarber(addForm)">
+
+                                <label class="col-form-label">Image URL (optional)</label>
+                                <input ngModel name="imageLink" id="imageLink" type="text" class="form-control" placeholder="Image URL">
+                                
+                                <label class="col-form-label">Name</label>
+                                <input ngModel name="name" id="name" type="text" class="form-control" placeholder="Name" required>
+
+                                <label class="col-form-label">Nick Name</label>
+                                <input ngModel name="nickName" id="nickName" type="text" class="form-control" placeholder="Nick Name" required>
+
+                                <label class="col-form-label">Phone </label>
+                                <input ngModel name="phoneNumber" id="phoneNumber" type="text" class="form-control" placeholder="Number (e.g.: 20 5355 1123)" required>
+
+                                <label class="col-form-label">Base Haircut Price (HUF)</label>
+                                <input ngModel name="haircutPrice" id="haircutPrice" type="number" class="form-control" placeholder="(min.: 1000 | max.: 8000 )"  min=1000 max=8000 required>
+
+                                <label class="col-form-label">Instagram</label>
+                                <input ngModel name="instagramUsername" id="instagramUsername" type="text" class="form-control" placeholder="Username (e.g.: madisonbeer)" required>
+                                
+                                <div class="modal-footer">
+                                  <button [disabled]="addForm.invalid" type="submit" class="btn btn-outline-dark">Add</button>
+                                  <button type="button" id="close-add-modal" class="btn btn-outline-dark" (click)="onCloseAddModal()">Close</button>
+                                </div>
+                              </form>
+                          </div>
+                </div>
+             </div>
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayEdit}">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <h4 class="modal-title">Edit Barber</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="onCloseEditModal()"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                     <div class="modal-body">
+                      <form #editForm="ngForm">
+                        <input type="hidden" name="id" id="id" ngModel="{{editBarber?.id}}">
+
+                        <label class="col-form-label">Image URL (optional)</label>
+                        <input ngModel="{{editBarber?.imageLink}}" name="imageLink" id="imageLink" type="text" class="form-control" placeholder="Image URL">
+                        
+                        <label class="col-form-label">Name</label>
+                        <input ngModel="{{editBarber?.name}}" name="name" id="name" type="text" class="form-control" placeholder="Name" required>
+
+                        <label class="col-form-label">Nick Name</label>
+                        <input ngModel="{{editBarber?.nickName}}" name="nickName" id="nickName" type="text" class="form-control" placeholder="Nick Name" required>
+
+                        <label class="col-form-label">Phone </label>
+                        <input ngModel="{{editBarber?.phoneNumber}}" name="phoneNumber" id="phoneNumber" type="text" class="form-control" placeholder="Number (e.g.: 20 5355 1123)" required>
+
+                        <label class="col-form-label">Base Haircut Price (HUF)</label>
+                        <input ngModel="{{editBarber?.haircutPrice}}" name="haircutPrice" id="haircutPrice" type="number" class="form-control" placeholder="(min.: 1000 | max.: 8000 )"  min=1000 max=8000 required>
+
+                        <label class="col-form-label">Instagram</label>
+                        <input ngModel="{{editBarber?.instagramUsername}}" name="instagramUsername" id="instagramUsername" type="text" class="form-control" placeholder="Username (e.g.: madisonbeer)" required>
+                        
+                        <div class="modal-footer">
+                          <button [disabled]="editForm.invalid" type="submit" (click)="updateBarber(editForm.value)" class="btn btn-outline-dark">Add Edited</button>
+                          <button type="button" id="close-edit-modal" class="btn btn-outline-dark" (click)="onCloseEditModal()" >Close</button>
+                        </div>
+
+                      </form>
+                      </div>
+              </div>
+         </div>
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':displayView}">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <h4 class="modal-title">View Barber</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="onCloseViewModal()"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                     <div class="modal-body">
+                        <img src= {{viewBarber?.imageLink}} width="300px" style="margin-left:10px">
+                        <div style="margin-left: 10px">
+                        <div> <span class="view-content">Name:</span> {{viewBarber?.name}}</div>
+                          <div> <span class="view-content">Nickname: </span> {{viewBarber?.nickName}}</div>
+                          <div> <span class="view-content">Added at: </span> {{viewBarber?.addedDate}}</div>
+                          <div> <span class="view-content">Lowest price: </span> {{viewBarber?.haircutPrice}} HUF</div>
+                          <div> <span class="view-content">Phone: </span> {{viewBarber?.phoneNumber}}</div>
+                          <div> <span class="view-content">Instagram: </span> {{viewBarber?.instagramUsername}}</div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" id="close-edit-modal" class="btn btn-outline-dark" (click)="onCloseViewModal()" >Close</button>
+                        </div>
+                      </div>
+              </div>
+         </div>
+    </div>
+    
+<div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			<div class="table-responsive">
+				<table class="table barber-list">
+					<thead>
+						<tr>
+							<th><span>Barber</span></th>
+							<th><span>Added (Date)</span></th>
+              <th><span>Base Haircut Price</span></th>
+							<th><span>Phone Number</span></th>
+							<th><span>Instagram</span></th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let barber of barbers">
+							<td>
+								<img src="{{barber?.imageLink}}" alt="">
+								<a class="barber-name">{{barber?.name}}</a>
+								<span class="barber-subhead"> {{barber?.nickName}}</span>
+							</td>
+							<td>
+                                <i class="bi bi-calendar"></i>
+								{{barber?.addedDate}}
+							</td>
+              <td>
+                  <i class="bi bi-cash"></i>
+                  {{barber?.haircutPrice}} HUF
+              </td>
+							<td>
+                                <i class="bi bi-telephone"></i>
+								<span class="label label-default"> {{barber?.phoneNumber}} </span>
+							</td>
+							<td>
+                                <i class="bi bi-instagram"></i>
+								<a href="https://www.instagram.com/{{barber?.instagramUsername}}"> {{barber?.instagramUsername}} </a>
+							</td>
+							<td style="width: 10%;">
+								<a (click)="onOpenEditModal(barber)" class="table-link">
+									<span class="fa-stack">
+										<i class="fa fa-square fa-stack-2x"></i>
+										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+									</span>
+								</a>
+								<a (click)="deleteBarber(barber)" class="table-link danger">
+									<span class="fa-stack">
+										<i class="fa fa-square fa-stack-2x"></i>
+										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+									</span>
+								</a>
+                <a (click)="onOpenViewModal(barber.id)" class="eye-link">
+                  <i class="fa fa-eye" style= "color: black; margin-left: 2pt; padding-top: 2pt; font-size: 16px;"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
