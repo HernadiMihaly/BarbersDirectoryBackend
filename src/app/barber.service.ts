@@ -42,9 +42,11 @@ export class BarberService {
     return this.http.get<Barber>(`http://localhost:8080/barbers/${barberId}`, {headers});
   }
 
-  public login(username:string,password:string){
+  public login(user: User):Observable<any>{
+    var username = user.email;
+    var password = user.password;
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.get("http://localhost:8080/login",{headers,responseType: 'text' as 'json'})
+    return this.http.post("http://localhost:8080/login", user, {headers,responseType: 'text' as 'json'})
   }
 
   public logout(){

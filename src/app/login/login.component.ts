@@ -22,13 +22,13 @@ export class LoginComponent implements OnInit{
   }
 
   loginUser(loginForm: NgForm){
-    this.user.email = loginForm.value.emailInput;
-    this.user.password= loginForm.value.passwordInput;
+      this.user.email = loginForm.value.emailInput;
+      this.user.password= loginForm.value.passwordInput;
 
     sessionStorage.setItem('currentEmail', this.user.email);
     sessionStorage.setItem('currentPassword', this.user.password);
 
-    this.barberService.login(this.user.email, this.user.password).subscribe(
+    this.barberService.login(this.user).subscribe(
       data =>{
         this.router.navigate(['/barber'])
       },
